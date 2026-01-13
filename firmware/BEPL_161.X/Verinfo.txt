@@ -1,0 +1,4 @@
+Created fro all testing on our UNI02 board 
+Uses many files linked from BEPL_T which was written to test blocks 
+on BEPL-056 board. These files can be used for UNI03 baord also 
+Only pin definitions in some places may change.
