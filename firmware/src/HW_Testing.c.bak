@@ -359,7 +359,6 @@ void Check_Amplifier(uint8_t AmplNode,bool IsVelMode)
     uint32_t timeConsumed = GetSystemMs();
     uint32_t err;
     AmplOprMode reqmode=Ampl_POSITION_Mode;
-    char Reason[64];
     
     if(!Get_Amp_Error_if_Any(AmplNode,&err))
     {
@@ -382,7 +381,7 @@ void Check_Amplifier(uint8_t AmplNode,bool IsVelMode)
     if(!Init_Amplifier(AmplNode,reqmode))
     {
         printf("\rInit_Amp Failed AmplStatus - %08X, CANStatus - %d",AmplStatus,CAN_state);
-        Get_and_Display_Ampl_Error(AmplNode,Reason);
+        Get_and_Display_Ampl_Error(AmplNode);
         return;
     }
     printf("\rAmp Initiated..%d",(GetSystemMs() - timeConsumed));

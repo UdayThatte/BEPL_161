@@ -112,7 +112,7 @@ void UserTimer10mSec()
    }
    
     MyTimer++;
-    if(MyTimer>10) //cycle of 50msec
+    if(MyTimer>5) //cycle of 50msec
     {
     MyTimer = 0;        
         if(Start_ETH_fb)
@@ -124,7 +124,7 @@ void UserTimer10mSec()
 
 
 //assumes that Amp enabled and Mode is set
-void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
+void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative)
 {
     AmplComm_Status stat;
     bool Reached;
@@ -153,25 +153,20 @@ void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
     //LCDWriteString(0,3,1,"Ampl GO Comm.Issued.");
     
 
+    Reached = false;
     
-    if(IsBlocking)
+    //till target is reached
+    do
     {
-        //till target is reached
-        Reached = false;
-        do
+        stat = Check_if_Target_Reached(AmplNode,&Reached);
+        if(stat!= AMPL_STATE_OK)
         {
-            
-            stat = Check_if_Target_Reached(AmplNode,&Reached);
-            if(stat!= AMPL_STATE_OK)
-            {
-                printf("\rTarget Reached Checking returned %04X\r",stat);
-                printf("\rValue received - %04X\r",AmplStatus);
-                return;
-            }
-          //printf("\rMoving..");
-        }while(!Reached);
-        
-    }
+            printf("\rTarget Reached Checking returned %04X\r",stat);
+            printf("\rValue received - %04X\r",AmplStatus);
+            return;
+        }
+      //printf("\rMoving..");
+    }while(!Reached);
     
     //LCDWriteString(0,3,1,"Ampl TARGET Reached.");
     
@@ -182,12 +177,6 @@ void Process_Proto_Cmd(Protocol_Info* ProtoPtr)
 {
 //in the Buffer[1] - no of bytes to process [2] - is command [3].. Parameters if any
 double Req_AZ_Position,Req_EL_Position;
-double Req_Second_Position;
-int count = 10;
-uint32_t Enco;
-char dispstr[32];
-double Angle;
-int32_t Position;
 
     ProtoPtr->Protocol_State = PROTO_CMD_IN_PROCESS;
     switch(*(ProtoPtr->BufferFor_DataRcv+2))
@@ -195,72 +184,15 @@ int32_t Position;
         case 0x1: //position //3,4 AZ (359.99)  5,6(+-90) EL position
             //cuurently only AZ motor available
             FC_byte_in_feedback |= CMD_RCVD_MASK;
-            //Req_AZ_Position = (((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) /100.0;
-            Req_AZ_Position = ((((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) * 360.0 )/65536 ;
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,false,true);
-            break;
-        case 0x02:
-            FC_byte_in_feedback |= CMD_RCVD_MASK;
-            Req_AZ_Position = ((((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) * 360.0 )/65536 ;
-            Req_Second_Position = ((((*(ProtoPtr->BufferFor_DataRcv+5))*256)+(*(ProtoPtr->BufferFor_DataRcv+6))) * 360.0 )/65536 ;
-            while(count)
-            {
-
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,false,true);
-                        Get_Actual_Motor_Position(AZ_Amplifier,&Position);
-                        sprintf(dispstr,"Pos:x%08X",Position);
-                        LCDWriteString(0,3,1,dispstr);                       
-                        sprintf(dispstr,"Pos:%8.2f Rev    ",(double)Position/65535);
-                        LCDWriteString(0,4,1,dispstr);
-                        AZ_Motor_Position = Position;
- 
-                            Get_Enco_Count_CAN(EL_Encode_Node,&Enco);
-                    if(CAN_state == STATE_CAN_IDLE)
-                    {
-                        Get_Paras_12Bit_Encoders(Enco,&Angle,EL_Enco_GR);
-                        //sprintf(dispstr,"CAN:x%04X Ang:%6.2f",Enco,Angle);
-                        LCDWriteString(0,1,1,dispstr);
-                        EL_Enco_Position = Enco; //
-                        EL_Enco_Angle = Angle;
-                    }
-                    else
-                    {
-                        LCDWriteString(0,1,1,"  CAN ENCO ERROR    ");
-                        LongBeep();
-                    }
-
-            Move_Motor(AZ_Amplifier,Req_Second_Position,false,true);
-                       Get_Actual_Motor_Position(AZ_Amplifier,&Position);
-                        sprintf(dispstr,"Pos:x%08X",Position);
-                        LCDWriteString(0,3,1,dispstr);                       
-                        sprintf(dispstr,"Pos:%8.2f Rev    ",(double)Position/65535);
-                        LCDWriteString(0,4,1,dispstr);
-                        AZ_Motor_Position = Position;
-             
-                            Get_Enco_Count_CAN(EL_Encode_Node,&Enco);
-                    if(CAN_state == STATE_CAN_IDLE)
-                    {
-                        Get_Paras_12Bit_Encoders(Enco,&Angle,EL_Enco_GR);
-                        //sprintf(dispstr,"CAN:x%04X Ang:%6.2f",Enco,Angle);
-                        LCDWriteString(0,1,1,dispstr);
-                        EL_Enco_Position = Enco; //
-                        EL_Enco_Angle = Angle;
-                    }
-                    else
-                    {
-                        LCDWriteString(0,1,1,"  CAN ENCO ERROR    ");
-                        LongBeep();
-                    }
-
-            count--;
-            }
+            Req_AZ_Position = (((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) /100.0;
+            Move_Motor(AZ_Amplifier,Req_AZ_Position,true);
             break;
         case 0x08: //AZ INCH 
              //0.0 to 10.0 (0 to 100)
             Req_AZ_Position = *(ProtoPtr->BufferFor_DataRcv+3) /10.0;
             if(*(ProtoPtr->BufferFor_DataRcv+4) == 0xff)
                 Req_AZ_Position *= -1;
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,true,true);
+            Move_Motor(AZ_Amplifier,Req_AZ_Position,true);
             break;
         case 0x09: //EL
             break;
@@ -279,7 +211,6 @@ void Check_CAN_Devices()
  uint16_t StatWrd;
  uint32_t Enco;
  int count=0;
- char Reason[64];
  
     printf("\rWait Finding AZ Amplifier..");
     LCDWriteString(1,1,1,"Finding AZ Amplifier");
@@ -309,10 +240,7 @@ void Check_CAN_Devices()
         printf("\rEL Amplifier Found");
         LCDWriteString(1,2,1,"EL Amplifier Found..");
     }
-   
-    Get_and_Display_Ampl_Error(AZ_Amplifier,Reason);
-    LCDWriteString(1,3,1,Reason);
-    delay_mS(2000);
+
 //        printf("\rWait Finding AZ Encoder..");
 //        LCDWriteString(1,3,1,"Finding AZ Encoder  ");
 //        count = 0;
@@ -381,7 +309,6 @@ void disp_all_inputs()
     }
     
 }
-
 void Start_Testing_Amp_Enco()
 {
  uint32_t Enco;
@@ -389,8 +316,7 @@ void Start_Testing_Amp_Enco()
  bool done =false;
  double Angle;
   int32_t Position;
-int count=0;
-
+  
      ADC_Spr1 = 0;
      ADC_Spr2 = 0;
 	 ADC_result_ready = false;
@@ -407,7 +333,8 @@ int count=0;
         sprintf(dispstr,"Err:%08X  CAN-%2d",AmplStatus,CAN_state);
         LCDWriteString(0,3,1,dispstr);
         LongBeep();
-        
+        //Get_and_Display_Ampl_Error(AmplNode);
+        //return;
     }
     //else
     //    LCDWriteString(0,3,1,"Amplifier Initiated.");
@@ -450,23 +377,16 @@ int count=0;
            Enco  = Get_SSI_Enco_Count_ST(0,true);//Channle0 with gray code
                 if(!SSI_encode_Fault)
                 {
-                     Get_Paras_13Bit_Encoders(Enco,&Angle,AZ_Enco_GR);
+                    Get_Paras_13Bit_Encoders(Enco,&Angle,AZ_Enco_GR);
                     sprintf(dispstr,"SSI:x%04X Ang:%6.2f",Enco,Angle);
                     LCDWriteString(0,2,1,dispstr);
                     AZ_Enco_Position = Enco;
                     AZ_Enco_Angle = Angle;
-                       
-                        count = 0;
                 }
                 else
                 {
-                    count++;
-                    if(count>3)
-                    {
                     LCDWriteString(0,2,1,"  SSI ENCO ERROR    ");
                     LongBeep();
-                    count = 0;
-                    }
                     //return;
                 }
 
@@ -518,10 +438,10 @@ int count=0;
                         Set_Motor_Home_Position(AZ_Amplifier);
                         break;
                    case ELKEY:
-                        Move_Motor(AZ_Amplifier,10.0,true,true); //relative
+                        Move_Motor(AZ_Amplifier,10.0,true); //relative
                         break;
                    case AZKEY:
-                        //Move_Motor(AZ_Amplifier,-90.0,false,true); //absolute
+                        //Move_Motor(AZ_Amplifier,-90.0,false); //absolute
                         LCDWriteString(1,2,1,"                    ");
                         LCDWriteString(1,2,1,"Abs.Postion?");
                         if(Enter_float_Data(1,6,2,14,&Angle,30))
@@ -533,7 +453,7 @@ int count=0;
                             ShortBeep();
                             }
                             else
-                                Move_Motor(AZ_Amplifier,Angle,false,true); //absolute
+                                Move_Motor(AZ_Amplifier,Angle,false); //absolute
                         }
                         else
                         {
@@ -544,24 +464,7 @@ int count=0;
         
 
                         break;
-                   case ROLLKEY:
-                       Move_Motor(AZ_Amplifier,60,true,true);
-                       Get_Actual_Motor_Position(AZ_Amplifier,&Position);
-                        sprintf(dispstr,"Pos:x%08X",Position);
-                        LCDWriteString(0,3,1,dispstr);                       
-                        sprintf(dispstr,"Pos:%8.2f Rev    ",(double)Position/65535);
-                        LCDWriteString(0,4,1,dispstr);
-                        AZ_Motor_Position = Position;
-                      delay_mS(1000);
-                       Move_Motor(AZ_Amplifier,-60,true,true);
-                       Get_Actual_Motor_Position(AZ_Amplifier,&Position);
-                        sprintf(dispstr,"Pos:x%08X",Position);
-                        LCDWriteString(0,3,1,dispstr);                       
-                        sprintf(dispstr,"Pos:%8.2f Rev    ",(double)Position/65535);
-                        LCDWriteString(0,4,1,dispstr);
-                        AZ_Motor_Position = Position;
-                       
-                       break;
+                        
                    default:
                        break;
                }
@@ -849,10 +752,8 @@ int main ( void )
     ShortBeep();
     
     Check_CAN_Devices();
+
     
-    //LCDWriteString(1,3,1,"Testing Keys..");
-    //LCDWriteString(1,4,1,"Press Q on PC");
-    //Test_Keys();
     
     System_Booted = true;
     printf("\rSystem Initialized");
