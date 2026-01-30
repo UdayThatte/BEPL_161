@@ -16,6 +16,13 @@ extern "C" {
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
 
+typedef struct
+{
+    uint32_t revBits;
+    uint32_t angBits;
+    uint32_t gearRatio;
+}EncoderValues_t;
+
 //This defined machine dependant Parameters for calculation of Ampl / Enco values
 #define    AZ_motor_rotation_direction  1 //decides normal or Reverse Rotation   
 #define    AZ_GR_motor_to_load    128// 1 or 128.0//128.0
@@ -35,12 +42,11 @@ extern "C" {
 #define    EL_default_Velocity       60.0    //Max 90deg/sec (Protocol Ddocument)
 #define    EL_default_acc            60.0   //100.0          //240.0
     
-#define    AZ_Enco_GR  1
-#define    EL_Enco_GR  1    
+
 //Input EncoReading - Count Receied from Encoder
 //Returns  angle-Angle of the load
-void Get_Paras_12Bit_Encoders(uint32_t EncoReading,double* angle,double GearRatio);
-void Get_Paras_13Bit_Encoders(uint32_t EncoReading,double* angle,double GearRatio); //12 bit gray
+void Get_Paras_12Bit_Encoders(uint32_t EncoReading,double* angle,uint16_t GearRatio);
+void Get_Paras_13Bit_Encoders(uint32_t EncoReading,double* angle,uint16_t GearRatio); //12 bit gray
 
 //Input Diff angle to go in degrees ( -359.99 to 359.99) On destination
 //returns Position Count to be loaded to Amp.

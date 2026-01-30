@@ -1,4 +1,5 @@
 #include "First_test.h"
+#include "App_Protocol.h"
 extern volatile bool KeyPressed;
 extern unsigned int KeyCode;
 
@@ -73,9 +74,9 @@ void Main_Loop_Our()
     Test_CAN_Enco(EL_Encode_Node);
 
     
-    Check_Amplifier(AZ_Amplifier,true);//velocity mode
+    Check_Amplifier(AZ_Amplifier,true,"AZ Amplifier");//velocity mode
     delay_mS(2000);
-    Check_Amplifier(AZ_Amplifier,false);//position mode
+    Check_Amplifier(AZ_Amplifier,false,"EL Amplifier");//position mode
     
     GetMachinesRTC(&MyTime);
     testtime[0] = MyTime.Day;

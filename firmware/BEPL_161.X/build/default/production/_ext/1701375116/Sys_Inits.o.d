@@ -22,7 +22,7 @@ build/default/production/_ext/1701375116/Sys_Inits.o: \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
- ../src/Port_Definitions.h ../../../BEPL_T/firmware/src/BSP/Events.h \
+ ../src/System_Configuration.h ../../../BEPL_T/firmware/src/BSP/Events.h \
  ../../../BEPL_T/firmware/src/API/BoardTemp.h \
  ../../../BEPL_T/firmware/src/BSP/RTC_Comm.h \
  ../../../BEPL_T/firmware/src/BSP/I2C_Comm.h
@@ -71,7 +71,7 @@ build/default/production/_ext/1701375116/Sys_Inits.o: \
 
 ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h:
 
-../src/Port_Definitions.h:
+../src/System_Configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/Events.h:
 

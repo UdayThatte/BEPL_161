@@ -20,7 +20,11 @@ build/default/production/_ext/1701374055/Para_Calculations.o: \
  ../src/config/default/peripheral/uart/plib_uart1.h \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
- ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h
+ ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
+ ../../../BEPL_T/firmware/src/API/Ampli_functions.h \
+ ../../../BEPL_T/firmware/src/API/Amplifier_Com.h \
+ ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
+ ../src/System_Configuration.h
 
 ../src/Para_Calculations.h:
 
@@ -65,3 +69,11 @@ build/default/production/_ext/1701374055/Para_Calculations.o: \
 ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h:
 
 ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h:
+
+../../../BEPL_T/firmware/src/API/Ampli_functions.h:
+
+../../../BEPL_T/firmware/src/API/Amplifier_Com.h:
+
+../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
+
+../src/System_Configuration.h:

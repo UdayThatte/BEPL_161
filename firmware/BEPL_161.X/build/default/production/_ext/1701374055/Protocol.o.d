@@ -22,7 +22,7 @@ build/default/production/_ext/1701374055/Protocol.o: \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
- ../src/Port_Definitions.h
+ ../src/System_Configuration.h ../src/App_Protocol.h
 
 ../../../BEPL_T/firmware/src/API/Protocol.h:
 
@@ -68,4 +68,6 @@ build/default/production/_ext/1701374055/Protocol.o: \
 
 ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h:
 
-../src/Port_Definitions.h:
+../src/System_Configuration.h:
+
+../src/App_Protocol.h:

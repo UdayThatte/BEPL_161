@@ -27,7 +27,7 @@
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include <stdio.h>
 #include "definitions.h"                // SYS function prototypes
-#include "Port_Definitions.h"
+#include "System_Configuration.h"
 #include "Sys_Inits.h"
 
 #include "HW_Testing.h"
@@ -37,6 +37,7 @@
 #include "Para_Calculations.h"
 #include "First_test.h"
 #include "CAN_Enco_Com.h"
+#include "App_Protocol.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -47,6 +48,9 @@
 
 //
 //
+extern uint16_t  AZ_Enco_GR ; //shoud be integer
+extern uint16_t  EL_Enco_GR ;    
+
 extern uint16_t ADC_Spr1,ADC_Spr2;
 extern volatile bool ADC_result_ready;
 
@@ -92,32 +96,30 @@ extern volatile bool Start_ETH_fb ;
 void UserTimer10mSec()
 {
     if(!System_Booted) return; //No operation untill System Booted/Initialized
-   //Update Outputs Every 10mSec
-   GPIO_PortWrite(GPIO_PORT_G, 0xF000,(uint32_t)OUT_IMG << 8 );//OUT7,6,5,4
-   GPIO_PortWrite(GPIO_PORT_G, 0x0003,(uint32_t)OUT_IMG ); //OUT1,OUT0
-   //GPIO_PortWrite(GPIO_PORT_B, 0x8000,(uint32_t)OUT_IMG << 13 );//RB15  OUT2
-   //GPIO_PortWrite(GPIO_PORT_B, 0x0080,(uint32_t)OUT_IMG << 4 );//RB7    OUT3
-   GPIO_PortWrite(GPIO_PORT_A,0x0002,(uint32_t)OUT_IMG >> 1 );//OUT2 RA1
-   GPIO_PortWrite(GPIO_PORT_A,0x4000,(uint32_t)OUT_IMG << 11 );//OUT3 RA14
-   
-   GPIO_PortWrite(GPIO_PORT_C, 0x000E,(uint32_t)BRK_IMG << 1 );//RC1..3 is BRK1..3
-   if(InputReadEnable)
-   {
-        EN_IN_HI_Clear();
-        INP_IMG = GPIO_PortRead(GPIO_PORT_D)<<7;                    //RD8..RD1 DB7..DB0
-        EN_IN_HI_Set();
-        EN_IN_LO_Clear();
-        INP_IMG = (INP_IMG & 0xff00)| ((uint16_t)(GPIO_PortRead(GPIO_PORT_D)>>1)&0xff);
-        EN_IN_LO_Set();       
-   }
+//   //Update Outputs Every 10mSec
+//   GPIO_PortWrite(GPIO_PORT_G, 0xF000,(uint32_t)OUT_IMG << 8 );//OUT7,6,5,4
+//   GPIO_PortWrite(GPIO_PORT_G, 0x0003,(uint32_t)OUT_IMG ); //OUT1,OUT0
+//   GPIO_PortWrite(GPIO_PORT_A,0x0002,(uint32_t)OUT_IMG >> 1 );//OUT2 RA1
+//   GPIO_PortWrite(GPIO_PORT_A,0x4000,(uint32_t)OUT_IMG << 11 );//OUT3 RA14
+//   
+//   GPIO_PortWrite(GPIO_PORT_C, 0x000E,(uint32_t)BRK_IMG << 1 );//RC1..3 is BRK1..3
+//   if(InputReadEnable)
+//   {
+//        EN_IN_HI_Clear();
+//        INP_IMG = GPIO_PortRead(GPIO_PORT_D)<<7;                    //RD8..RD1 DB7..DB0
+//        EN_IN_HI_Set();
+//        EN_IN_LO_Clear();
+//        INP_IMG = (INP_IMG & 0xff00)| ((uint16_t)(GPIO_PortRead(GPIO_PORT_D)>>1)&0xff);
+//        EN_IN_LO_Set();       
+//   }
    
     MyTimer++;
-    if(MyTimer>10) //cycle of 50msec
-    {
-    MyTimer = 0;        
-        if(Start_ETH_fb)
-            Send_Response_ETH();
-    }
+//    if(MyTimer>10) //cycle of 50msec
+//    {
+//    MyTimer = 0;        
+//        if(Start_ETH_fb)
+//            Send_Response_ETH();
+//    }
         
         
 }
@@ -310,7 +312,7 @@ void Check_CAN_Devices()
         LCDWriteString(1,2,1,"EL Amplifier Found..");
     }
    
-    Get_and_Display_Ampl_Error(AZ_Amplifier,Reason);
+    Get_and_Display_Ampl_Error(AZ_Amplifier,Reason,"AZ Amplifier");
     LCDWriteString(1,3,1,Reason);
     delay_mS(2000);
 //        printf("\rWait Finding AZ Encoder..");
@@ -401,7 +403,7 @@ int count=0;
     
     ClearDisp(0);
     
-    if(!Init_Amplifier(AZ_Amplifier,Ampl_POSITION_Mode))
+    if(!Init_Amplifier_old(AZ_Amplifier,Ampl_POSITION_Mode))
     {
         printf("Init: Err:%08X  CAN-%2d",AmplStatus,CAN_state);
         sprintf(dispstr,"Err:%08X  CAN-%2d",AmplStatus,CAN_state);

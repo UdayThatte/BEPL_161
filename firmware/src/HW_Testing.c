@@ -28,7 +28,7 @@ extern Protocol_Info ETH_Proto_Ptrs;
 extern Protocol_Info PNDNT_Proto_Ptrs;
 
 extern uint8_t FC_byte_in_feedback;
-extern uint8_t Status_Byte1_in_feedback;
+//extern uint8_t Status_Byte1_in_feedback;
 extern bool System_Booted ;
 
 extern volatile I2C_TRANSFER_STATUS transferStatus;
@@ -352,7 +352,7 @@ void Test_Positioning(uint8_t AmplNode)
     printf("\rTaget Reached..");
 }
 
-void Check_Amplifier(uint8_t AmplNode,bool IsVelMode)
+void Check_Amplifier(uint8_t AmplNode,bool IsVelMode,char* AmplName)
 {
     //uint8_t Node,uint16_t ObjAdr,uint8_t SubIdx,DataBits NoofBits,uint32_t DataToWrite,FIFO_No_for_Resp fifonunm)
    // Write_CAN_Object(AZ_Amplifier,0x1003,0x0,Data_32Bit,0x0,FIFO_Ampl_0+(AZ_Amplifier - CAN_Node_Amp0));
@@ -379,10 +379,10 @@ void Check_Amplifier(uint8_t AmplNode,bool IsVelMode)
     else    
         printf("\r\rTesting Amp in Position Mode..\r");
     
-    if(!Init_Amplifier(AmplNode,reqmode))
+    if(!Init_Amplifier_old(AmplNode,reqmode))
     {
         printf("\rInit_Amp Failed AmplStatus - %08X, CANStatus - %d",AmplStatus,CAN_state);
-        Get_and_Display_Ampl_Error(AmplNode,Reason);
+        Get_and_Display_Ampl_Error(AmplNode,Reason,AmplName);
         return;
     }
     printf("\rAmp Initiated..%d",(GetSystemMs() - timeConsumed));

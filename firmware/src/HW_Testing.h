@@ -16,7 +16,7 @@
 
 
 #include "Events.h"
-#include "Port_Definitions.h"
+#include "System_Configuration.h"
 #include "Beeps.h"
 #include "AtmelFlashMem.h"
 #include "RTC_Comm.h"
@@ -45,7 +45,7 @@ void Test_SSI_Enco(uint8_t ChNo);
 void Test_CAN_Enco(int EncodeNode);
 void Test_VelocityMode(uint8_t AmplNode);
 void Test_Positioning(uint8_t AmplNode);
-void Check_Amplifier(uint8_t AmplNode,bool IsVelMode);
+void Check_Amplifier(uint8_t AmplNode,bool IsVelMode,char* AmplName);
 void Test_LEDs();
 void Test_Ops();
 void Test_RTC();
