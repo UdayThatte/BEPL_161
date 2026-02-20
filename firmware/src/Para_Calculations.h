@@ -25,7 +25,7 @@ typedef struct
 
 //This defined machine dependant Parameters for calculation of Ampl / Enco values
 #define    AZ_motor_rotation_direction  1 //decides normal or Reverse Rotation   
-#define    AZ_GR_motor_to_load    128// 1 or 128.0//128.0
+#define    AZ_GR_motor_to_load    125// 1 or 128.0//128.0
 #define    AZ_Max_Positive         359.99
 #define    AZ_Max_Negative         -359.99    
 #define    AZ_AmplCountForOneRot   65536UL //Page 65 of manual Factor Group
