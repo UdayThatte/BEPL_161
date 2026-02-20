@@ -48,6 +48,8 @@
 
 //
 //
+extern Ampl_Paras AZ_Paras,EL_Paras;
+
 extern uint16_t  AZ_Enco_GR ; //shoud be integer
 extern uint16_t  EL_Enco_GR ;    
 
@@ -104,7 +106,7 @@ void UserTimer10mSec()
 
 
 //assumes that Amp enabled and Mode is set
-void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
+void Move_Motor(double ToGo,bool IsRelative,bool IsBlocking)
 {
     AmplComm_Status stat;
     bool Reached;
@@ -112,9 +114,10 @@ void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
     char dispstr[48];
     uint32_t CountForAmp;
     
-    CountForAmp = Get_Count_ForAmpAZ(ToGo);
+    //CountForAmp = Get_Count_ForAmpAZ(ToGo);
+    CountForAmp = Get_Pos_Count_ForAmp(ToGo,&AZ_Paras);
     
-    stat = Set_Target_Position_Count(AmplNode,CountForAmp,IsRelative) ;//ffff is one revolution
+    stat = Set_Target_Position_Count(AZ_Amplifier,CountForAmp,IsRelative) ;//ffff is one revolution
     if(stat != AMPL_STATE_OK)
     {
         printf("\rTarget Position Set returned %04X\r",stat);
@@ -123,7 +126,7 @@ void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
     }
     //LCDWriteString(0,3,1,"Ampl Target is Set  ");
     
-    stat = Issue_GO_Command(AmplNode,true);
+    stat = Issue_GO_Command(AZ_Amplifier,true);
     if(stat != AMPL_STATE_OK)
     {
         printf("\rGO Command returned %04X\r",stat);
@@ -141,7 +144,7 @@ void Move_Motor(uint8_t AmplNode,double ToGo,bool IsRelative,bool IsBlocking)
         do
         {
             
-            stat = Check_if_Target_Reached(AmplNode,&Reached);
+            stat = Check_if_Target_Reached(AZ_Amplifier,&Reached);
             if(stat!= AMPL_STATE_OK)
             {
                 printf("\rTarget Reached Checking returned %04X\r",stat);
@@ -177,7 +180,7 @@ int32_t Position;
             FC_byte_in_feedback |= CMD_RCVD_MASK;
             //Req_AZ_Position = (((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) /100.0;
             Req_AZ_Position = ((((*(ProtoPtr->BufferFor_DataRcv+3))*256)+(*(ProtoPtr->BufferFor_DataRcv+4))) * 360.0 )/65536 ;
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,false,true);
+            Move_Motor(Req_AZ_Position,false,true);
             break;
         case 0x02:
             FC_byte_in_feedback |= CMD_RCVD_MASK;
@@ -186,7 +189,7 @@ int32_t Position;
             while(count)
             {
 
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,false,true);
+            Move_Motor(Req_AZ_Position,false,true);
                         Get_Actual_Motor_Position(AZ_Amplifier,&Position);
                         sprintf(dispstr,"Pos:x%08X",Position);
                         LCDWriteString(0,3,1,dispstr);                       
@@ -209,7 +212,7 @@ int32_t Position;
                         LongBeep();
                     }
 
-            Move_Motor(AZ_Amplifier,Req_Second_Position,false,true);
+            Move_Motor(Req_Second_Position,false,true);
                        Get_Actual_Motor_Position(AZ_Amplifier,&Position);
                         sprintf(dispstr,"Pos:x%08X",Position);
                         LCDWriteString(0,3,1,dispstr);                       
@@ -240,7 +243,7 @@ int32_t Position;
             Req_AZ_Position = *(ProtoPtr->BufferFor_DataRcv+3) /10.0;
             if(*(ProtoPtr->BufferFor_DataRcv+4) == 0xff)
                 Req_AZ_Position *= -1;
-            Move_Motor(AZ_Amplifier,Req_AZ_Position,true,true);
+            Move_Motor(Req_AZ_Position,true,true);
             break;
         case 0x09: //EL
             break;
@@ -381,7 +384,8 @@ int count=0;
     
     ClearDisp(0);
     
-    if(!Init_Amplifier_old(AZ_Amplifier,Ampl_POSITION_Mode))
+    //if(!Init_Amplifier_old(AZ_Amplifier,Ampl_POSITION_Mode))
+    if(!Init_Amplifier(AZ_Amplifier,Ampl_POSITION_Mode,&AZ_Paras))
     {
         printf("Init: Err:%08X  CAN-%2d",AmplStatus,CAN_state);
         sprintf(dispstr,"Err:%08X  CAN-%2d",AmplStatus,CAN_state);
@@ -427,10 +431,10 @@ int count=0;
                  LongBeep();
              }
 //            //Very fast repeatative reading of SSI gives error 
-           Enco  = Get_SSI_Enco_Count_ST(0,true);//Channle0 with gray code
+           Enco  = Get_SSI_Enco_Count_ST(0,true);//Channle0 
                 if(!SSI_encode_Fault)
                 {
-                     Get_Paras_13Bit_Encoders(Enco,&Angle,AZ_Enco_GR);
+                     Get_Paras_12Bit_Encoders(Enco,&Angle,AZ_Enco_GR);
                     sprintf(dispstr,"SSI:x%04X Ang:%6.2f",Enco,Angle);
                     LCDWriteString(0,2,1,dispstr);
                     AZ_Enco_Position = Enco;
@@ -498,10 +502,10 @@ int count=0;
                         Set_Motor_Home_Position(AZ_Amplifier);
                         break;
                    case ELKEY:
-                        Move_Motor(AZ_Amplifier,10.0,true,true); //relative
+                        Move_Motor(10.0,true,true); //relative
                         break;
                    case AZKEY:
-                        //Move_Motor(AZ_Amplifier,-90.0,false,true); //absolute
+                        //Move_Motor(-90.0,false,true); //absolute
                         LCDWriteString(1,2,1,"                    ");
                         LCDWriteString(1,2,1,"Abs.Postion?");
                         if(Enter_float_Data(1,6,2,14,&Angle,30))
@@ -513,7 +517,7 @@ int count=0;
                             ShortBeep();
                             }
                             else
-                                Move_Motor(AZ_Amplifier,Angle,false,true); //absolute
+                                Move_Motor(Angle,false,true); //absolute
                         }
                         else
                         {
@@ -525,7 +529,7 @@ int count=0;
 
                         break;
                    case ROLLKEY:
-                       Move_Motor(AZ_Amplifier,60,true,true);
+                       Move_Motor(60,true,true);
                        Get_Actual_Motor_Position(AZ_Amplifier,&Position);
                         sprintf(dispstr,"Pos:x%08X",Position);
                         LCDWriteString(0,3,1,dispstr);                       
@@ -533,7 +537,7 @@ int count=0;
                         LCDWriteString(0,4,1,dispstr);
                         AZ_Motor_Position = Position;
                       delay_mS(1000);
-                       Move_Motor(AZ_Amplifier,-60,true,true);
+                       Move_Motor(-60,true,true);
                        Get_Actual_Motor_Position(AZ_Amplifier,&Position);
                         sprintf(dispstr,"Pos:x%08X",Position);
                         LCDWriteString(0,3,1,dispstr);                       

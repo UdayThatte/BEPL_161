@@ -1,6 +1,7 @@
 build/default/production/_ext/1701374055/Para_Calculations.o: \
  ../../../BEPL_T/firmware/src/API/Para_Calculations.c \
- ../src/Para_Calculations.h ../src/config/default/definitions.h \
+ ../../../BEPL_T/firmware/src/API/Para_Calculations.h \
+ ../src/config/default/definitions.h \
  ../src/config/default/peripheral/can/plib_can1.h \
  ../src/config/default/device.h \
  ../src/config/default/toolchain_specifics.h \
@@ -26,7 +27,7 @@ build/default/production/_ext/1701374055/Para_Calculations.o: \
  ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
  ../src/System_Configuration.h
 
-../src/Para_Calculations.h:
+../../../BEPL_T/firmware/src/API/Para_Calculations.h:
 
 ../src/config/default/definitions.h:
 

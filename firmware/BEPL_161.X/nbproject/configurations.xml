@@ -88,6 +88,7 @@
         <itemPath>../../../BEPL_T/firmware/src/API/ETH_NetBurner.c</itemPath>
         <itemPath>../../../BEPL_T/firmware/src/API/ETH_NetBurner.h</itemPath>
         <itemPath>../../../BEPL_T/firmware/src/API/Para_Calculations.c</itemPath>
+        <itemPath>../../../BEPL_T/firmware/src/API/Para_Calculations.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="BSP" projectFiles="true">
         <itemPath>../../../BEPL_T/firmware/src/BSP/CAN_Comm.c</itemPath>
@@ -114,8 +115,6 @@
         <itemPath>../../../BEPL_T/firmware/src/BSP/Sys_Inits.h</itemPath>
         <itemPath>../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.c</itemPath>
         <itemPath>../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h</itemPath>
-        <itemPath>../../../BEPL_T/firmware/src/BSP/Enco_Handling.c</itemPath>
-        <itemPath>../../../BEPL_T/firmware/src/BSP/Enco_Handling.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="default" projectFiles="true">
@@ -180,7 +179,6 @@
       <itemPath>Verinfo.txt</itemPath>
       <itemPath>../src/First_Test.c</itemPath>
       <itemPath>../src/First_test.h</itemPath>
-      <itemPath>../src/Para_Calculations.h</itemPath>
       <itemPath>../src/System_Configuration.h</itemPath>
       <itemPath>../src/App_Globals.c</itemPath>
       <itemPath>../src/App_Protocol.c</itemPath>

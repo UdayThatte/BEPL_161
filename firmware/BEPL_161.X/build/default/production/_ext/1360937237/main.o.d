@@ -42,7 +42,9 @@ build/default/production/_ext/1360937237/main.o: ../src/main.c \
  ../../../BEPL_T/firmware/src/API/KBD_5X8.h \
  ../../../BEPL_T/firmware/src/API/LCD_functions.h \
  ../../../BEPL_T/firmware/src/API/ETH_NetBurner.h \
- ../src/Para_Calculations.h ../src/First_test.h ../src/App_Protocol.h
+ ../../../BEPL_T/firmware/src/API/Para_Calculations.h \
+ ../../../BEPL_T/firmware/src/API/Ampli_functions.h ../src/First_test.h \
+ ../src/App_Protocol.h
 
 ../src/config/default/definitions.h:
 
@@ -134,7 +136,9 @@ build/default/production/_ext/1360937237/main.o: ../src/main.c \
 
 ../../../BEPL_T/firmware/src/API/ETH_NetBurner.h:
 
-../src/Para_Calculations.h:
+../../../BEPL_T/firmware/src/API/Para_Calculations.h:
+
+../../../BEPL_T/firmware/src/API/Ampli_functions.h:
 
 ../src/First_test.h:
 

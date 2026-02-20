@@ -18,7 +18,7 @@ extern "C" {
 #include "definitions.h"                // SYS function prototypes
 
 //UART1 is used for Debug across all models
-//For this Hardware U6 is not used 
+//For this Hardware UNI02 U6 is not used 
 
 
 //define the Amplifier/Encoder nodes here (Offset)
@@ -31,11 +31,17 @@ extern "C" {
 #define  EL_Encode_Node CAN_Node_Encoder1
 
 
-#define ETH_Fb_Time_mSec 10    
-#define Keybaord_Used true //define this if Keyabords is to be used else those inputs would be additional INPUTS
-#define Only_4_Return_Lines  true //for std keyboard only 4 return lines are Used other 4 lines are to be used as Inputs
-                                //if this is false then full 5x8 keybaord is used
     
+#define AZ_Position_Positive_Error 0.1
+#define AZ_Position_Negative_Error 0.1    
+    
+#define ETH_Fb_Time_mSec 1    //with baud 57600 1.9msec is the transmission time 115200 0.9 but framing error occurs
+#define Keybaord_Used false //define this if Keyabords is to be used else those inputs would be additional INPUTS
+#define Only_4_Return_Lines  true //for std keyboard only 4 return lines are Used other 4 lines are to be used as Inputs
+                                //if this is false then full 5x8 keybaord is used (if kbd configfured)
+
+//DO NOT MODIFY FOLLOWING DEFINITIONS 
+//AS THESE ARE DEPENDANT ON HW UNI02  PCB  
 #define ETH_AT_PORT_ErrorGet UART3_ErrorGet
 #define ETH_AT_PORT_Read UART3_Read
 #define ETH_AT_PORT_Write UART3_Write
