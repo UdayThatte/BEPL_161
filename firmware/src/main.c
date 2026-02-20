@@ -96,30 +96,8 @@ extern volatile bool Start_ETH_fb ;
 void UserTimer10mSec()
 {
     if(!System_Booted) return; //No operation untill System Booted/Initialized
-//   //Update Outputs Every 10mSec
-//   GPIO_PortWrite(GPIO_PORT_G, 0xF000,(uint32_t)OUT_IMG << 8 );//OUT7,6,5,4
-//   GPIO_PortWrite(GPIO_PORT_G, 0x0003,(uint32_t)OUT_IMG ); //OUT1,OUT0
-//   GPIO_PortWrite(GPIO_PORT_A,0x0002,(uint32_t)OUT_IMG >> 1 );//OUT2 RA1
-//   GPIO_PortWrite(GPIO_PORT_A,0x4000,(uint32_t)OUT_IMG << 11 );//OUT3 RA14
-//   
-//   GPIO_PortWrite(GPIO_PORT_C, 0x000E,(uint32_t)BRK_IMG << 1 );//RC1..3 is BRK1..3
-//   if(InputReadEnable)
-//   {
-//        EN_IN_HI_Clear();
-//        INP_IMG = GPIO_PortRead(GPIO_PORT_D)<<7;                    //RD8..RD1 DB7..DB0
-//        EN_IN_HI_Set();
-//        EN_IN_LO_Clear();
-//        INP_IMG = (INP_IMG & 0xff00)| ((uint16_t)(GPIO_PortRead(GPIO_PORT_D)>>1)&0xff);
-//        EN_IN_LO_Set();       
-//   }
    
     MyTimer++;
-//    if(MyTimer>10) //cycle of 50msec
-//    {
-//    MyTimer = 0;        
-//        if(Start_ETH_fb)
-//            Send_Response_ETH();
-//    }
         
         
 }
