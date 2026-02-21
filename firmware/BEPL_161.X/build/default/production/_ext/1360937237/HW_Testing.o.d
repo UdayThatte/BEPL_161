@@ -21,25 +21,27 @@ build/default/production/_ext/1360937237/HW_Testing.o: \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
- ../../../BEPL_T/firmware/src/BSP/Events.h ../src/System_Configuration.h \
- ../../../BEPL_T/firmware/src/BSP/Beeps.h \
+ ../../../BEPL_T/firmware/src/BSP/Events.h \
+ ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
+ ../src/Project_Configuration.h ../../../BEPL_T/firmware/src/BSP/Beeps.h \
  ../src/config/default/toolchain_specifics.h \
  ../../../BEPL_T/firmware/src/API/AtmelFlashMem.h \
  ../../../BEPL_T/firmware/src/BSP/DataFlash_Comm.h \
  ../../../BEPL_T/firmware/src/BSP/RTC_Comm.h \
  ../../../BEPL_T/firmware/src/API/BoardTemp.h \
- ../../../BEPL_T/firmware/src/BSP/I2C_Comm.h \
- ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
+ ../../../BEPL_T/firmware/src/BSP/I2C_Comm.h ../src/Custom/CAN_Comm.h \
  ../../../BEPL_T/firmware/src/BSP/ETH_Module_Com.h \
  ../../../BEPL_T/firmware/src/API/Ampli_functions.h \
  ../../../BEPL_T/firmware/src/API/Amplifier_Com.h \
- ../src/System_Configuration.h \
  ../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h \
  ../../../BEPL_T/firmware/src/API/Protocol.h \
  ../../../BEPL_T/firmware/src/Utils/Utils.h \
  ../../../BEPL_T/firmware/src/API/RTC.h ../src/BEPL1420KB.h \
  ../../../BEPL_T/firmware/src/API/KBD_5X8.h \
- ../../../BEPL_T/firmware/src/API/LCD_functions.h
+ ../../../BEPL_T/firmware/src/API/LCD_functions.h \
+ ../../../BEPL_T/firmware/src/API/Para_Calculations.h \
+ ../../../BEPL_T/firmware/src/API/Ampli_functions.h \
+ ../src/Project_Configuration.h
 
 ../src/HW_Testing.h:
 
@@ -87,7 +89,9 @@ build/default/production/_ext/1360937237/HW_Testing.o: \
 
 ../../../BEPL_T/firmware/src/BSP/Events.h:
 
-../src/System_Configuration.h:
+../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
+
+../src/Project_Configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/Beeps.h:
 
@@ -103,15 +107,13 @@ build/default/production/_ext/1360937237/HW_Testing.o: \
 
 ../../../BEPL_T/firmware/src/BSP/I2C_Comm.h:
 
-../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
+../src/Custom/CAN_Comm.h:
 
 ../../../BEPL_T/firmware/src/BSP/ETH_Module_Com.h:
 
 ../../../BEPL_T/firmware/src/API/Ampli_functions.h:
 
 ../../../BEPL_T/firmware/src/API/Amplifier_Com.h:
-
-../src/System_Configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h:
 
@@ -126,3 +128,9 @@ build/default/production/_ext/1360937237/HW_Testing.o: \
 ../../../BEPL_T/firmware/src/API/KBD_5X8.h:
 
 ../../../BEPL_T/firmware/src/API/LCD_functions.h:
+
+../../../BEPL_T/firmware/src/API/Para_Calculations.h:
+
+../../../BEPL_T/firmware/src/API/Ampli_functions.h:
+
+../src/Project_Configuration.h:

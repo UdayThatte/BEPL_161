@@ -16,7 +16,7 @@
 
 
 #include "Events.h"
-#include "System_Configuration.h"
+#include "Board_Configuration.h"
 #include "Beeps.h"
 #include "AtmelFlashMem.h"
 #include "RTC_Comm.h"

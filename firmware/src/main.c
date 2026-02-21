@@ -27,7 +27,7 @@
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include <stdio.h>
 #include "definitions.h"                // SYS function prototypes
-#include "System_Configuration.h"
+#include "Board_Configuration.h"
 #include "Sys_Inits.h"
 
 #include "HW_Testing.h"
@@ -38,7 +38,8 @@
 #include "First_test.h"
 #include "CAN_Enco_Com.h"
 #include "App_Protocol.h"
-
+#include "SSI_Enco.h"
+#include "Project_Configuration.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
@@ -48,6 +49,11 @@
 
 //
 //
+extern volatile uint8_t GyroByte;
+extern volatile int IN_PNDNT_BUF;
+extern uint8_t PNDNT_DAT_Buffer[];
+
+extern EncoderParas_t AZ_Encoder_Data;
 extern Ampl_Paras AZ_Paras,EL_Paras;
 
 extern uint16_t  AZ_Enco_GR ; //shoud be integer
@@ -431,7 +437,7 @@ int count=0;
                  LongBeep();
              }
 //            //Very fast repeatative reading of SSI gives error 
-           Enco  = Get_SSI_Enco_Count_ST(0,true);//Channle0 
+           Enco  = Get_SSI_Encoder_Count(0,&AZ_Encoder_Data); //Get_SSI_Enco_Count_ST(0,true);//Channle0 
                 if(!SSI_encode_Fault)
                 {
                      Get_Paras_12Bit_Encoders(Enco,&Angle,AZ_Enco_GR);
@@ -792,6 +798,7 @@ void Main_Loop()
     
 }
 
+
 int main ( void )
 {
   char dispstr[32]  ;
@@ -799,8 +806,6 @@ int main ( void )
   double Angle;
     
     PON_Inits(); //This is mandatory Function to be called
-    OUT_IMG = 0;
-    BRK_IMG = 0;
     ///////
     printf("\rPON wait..");
     

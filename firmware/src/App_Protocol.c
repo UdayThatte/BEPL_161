@@ -8,11 +8,12 @@ extern double EL_Enco_Angle;
 extern double AZ_Enco_Angle;
 
 
-void Prepare_fb_string()
+void Prepare_fb_stringETH() //~25-30uS due to maths try another method
 {
    uint8_t Chksm=0;
    int n;
    uint16_t Position;
+   
    double ELAngle;
    ETH_OUT_Buffer[0] =  Proto_SOF;//'H';
    ETH_OUT_Buffer[1] = 0x06;//'e';//
@@ -45,4 +46,10 @@ void Prepare_fb_string()
    
    ETH_OUT_Buffer[8] = Chksm;//'L';//
       
+}
+
+void Prepare_fb_stringPNDNT() //~25-30uS due to maths try another method
+{
+//user defined protocol
+    
 }

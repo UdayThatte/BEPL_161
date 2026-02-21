@@ -23,8 +23,9 @@ build/default/production/_ext/1701374055/Ampli_functions.o: \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
  ../../../BEPL_T/firmware/src/API/Amplifier_Com.h \
- ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
- ../src/System_Configuration.h \
+ ../src/Custom/CAN_Comm.h \
+ ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
+ ../src/Project_Configuration.h \
  ../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h \
  ../../../BEPL_T/firmware/src/Utils/Utils.h \
  ../../../BEPL_T/firmware/src/API/Para_Calculations.h
@@ -75,9 +76,11 @@ build/default/production/_ext/1701374055/Ampli_functions.o: \
 
 ../../../BEPL_T/firmware/src/API/Amplifier_Com.h:
 
-../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
+../src/Custom/CAN_Comm.h:
 
-../src/System_Configuration.h:
+../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
+
+../src/Project_Configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h:
 

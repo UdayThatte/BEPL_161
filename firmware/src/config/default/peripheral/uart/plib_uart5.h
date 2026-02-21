@@ -79,14 +79,19 @@ bool UART5_Read( void *buffer, const size_t size );
 
 UART_ERROR UART5_ErrorGet( void );
 
-int UART5_ReadByte( void );
+bool UART5_ReadIsBusy( void );
 
-bool UART5_ReceiverIsReady( void );
+size_t UART5_ReadCountGet( void );
 
-void UART5_WriteByte( int data );
+bool UART5_ReadAbort(void);
 
-bool UART5_TransmitterIsReady( void );
+bool UART5_WriteIsBusy( void );
 
+size_t UART5_WriteCountGet( void );
+
+void UART5_WriteCallbackRegister( UART_CALLBACK callback, uintptr_t context );
+
+void UART5_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context );
 
 bool UART5_TransmitComplete( void );
 

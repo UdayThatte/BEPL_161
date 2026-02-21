@@ -1,5 +1,7 @@
 #include "First_test.h"
 #include "App_Protocol.h"
+#include "Project_Configuration.h"
+
 extern volatile bool KeyPressed;
 extern unsigned int KeyCode;
 

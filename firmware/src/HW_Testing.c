@@ -1,5 +1,8 @@
 #include "HW_Testing.h"
+#include "Para_Calculations.h"
+#include "Project_Configuration.h"
 
+extern EncoderParas_t AZ_Encoder_Data;
 extern volatile bool KeyPressed;
 extern volatile bool KeyBoardEnable;
 extern unsigned int KeyCode;
@@ -94,7 +97,7 @@ void Test_SSI_Enco(uint8_t ChNo)
      
      while(1)
      {
-       Enco  = Get_SSI_Enco_Count_ST(ChNo,true);//gray code
+       Enco  = Get_SSI_Encoder_Count(ChNo,&AZ_Encoder_Data); //Get_SSI_Enco_Count_ST(ChNo,true);//gray code
         if(!SSI_encode_Fault)
         {
             double Angle = (double) (Enco&0xfff); // make the value floating point

@@ -17,6 +17,7 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+    
 //Bit definitions for FC Byte in feedback response 
 //for FC_byte_in_feedback
 #define CMD_CHKSMOK_MASK 0x01 //1 chksm OK
@@ -30,7 +31,8 @@ extern "C" {
 //    
 
 //prepare 10 bytes string for this particular aplication
-void Prepare_fb_string();
+void Prepare_fb_stringETH();
+void Prepare_fb_stringPNDNT();
 
 
 #ifdef	__cplusplus

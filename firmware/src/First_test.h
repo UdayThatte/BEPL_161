@@ -16,7 +16,7 @@ extern "C" {
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include <stdio.h>
 #include "definitions.h"                // SYS function prototypes
-#include "System_Configuration.h"
+#include "Board_Configuration.h"
 #include "Sys_Inits.h"
 
 #include "HW_Testing.h"

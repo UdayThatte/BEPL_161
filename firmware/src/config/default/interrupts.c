@@ -68,16 +68,17 @@ void I2C_2_InterruptHandler( void );
 void CAN1_InterruptHandler( void );
 void UART_4_InterruptHandler( void );
 void UART_6_InterruptHandler( void );
+void UART_5_InterruptHandler( void );
 
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void __ISR(_CORE_TIMER_VECTOR, ipl1SOFT) CORE_TIMER_Handler (void)
+void __ISR(_CORE_TIMER_VECTOR, ipl2SOFT) CORE_TIMER_Handler (void)
 {
     CORE_TIMER_InterruptHandler();
 }
 
-void __ISR(_ADC_VECTOR, ipl2SOFT) ADC_Handler (void)
+void __ISR(_ADC_VECTOR, ipl1SOFT) ADC_Handler (void)
 {
     ADC_InterruptHandler();
 }
@@ -102,7 +103,7 @@ void __ISR(_CAN_1_VECTOR, ipl4SOFT) CAN_1_Handler (void)
     CAN1_InterruptHandler();
 }
 
-void __ISR(_UART_4_VECTOR, ipl2SOFT) UART_4_Handler (void)
+void __ISR(_UART_4_VECTOR, ipl3SOFT) UART_4_Handler (void)
 {
     UART_4_InterruptHandler();
 }
@@ -110,6 +111,11 @@ void __ISR(_UART_4_VECTOR, ipl2SOFT) UART_4_Handler (void)
 void __ISR(_UART_6_VECTOR, ipl1SOFT) UART_6_Handler (void)
 {
     UART_6_InterruptHandler();
+}
+
+void __ISR(_UART_5_VECTOR, ipl3SOFT) UART_5_Handler (void)
+{
+    UART_5_InterruptHandler();
 }
 
 

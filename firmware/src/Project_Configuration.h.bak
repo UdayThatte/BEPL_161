@@ -1,0 +1,63 @@
+/* 
+ * File:   Ampli_functions.h
+ * Author: UT
+ *
+ * Created on June 9, 2025, 4:37 PM
+ */
+
+#ifndef PROJECT_CONFIGURATION_H
+#define	PROJECT_CONFIGURATION_H
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
+#include <stddef.h>                     // Defines NULL
+#include <stdbool.h>                    // Defines true
+#include <stdlib.h>                     // Defines EXIT_FAILURE
+#include "definitions.h"                // SYS function prototypes
+
+//UART1 is used for Debug across all models
+//For this Hardware UNI02 U6 is not used 
+
+#define  UNI02 // defined Base baord here UNI02 UNI03 FOR NOW
+    //this will defined ports in the Board_Configuration.h
+    
+//define the Amplifier/Encoder nodes here (Offset)
+//for This system one more node CAN_Node_Amp2 is spare (not used)    
+//For all routines This constant is to be used    
+#define     AZ_Amplifier     CAN_Node_Amp0
+#define     EL_Amplifier     CAN_Node_Amp1
+
+#define  AZ_Encode_Node CAN_Node_Encoder0
+#define  EL_Encode_Node CAN_Node_Encoder1
+
+#define AZ_Position_Positive_Error 0.1
+#define AZ_Position_Negative_Error 0.1    
+
+
+////** LINES BELOW    WILL CONTROL BEGAVIOUR OF APPLICATION SET ALL PROPERLY
+#define Gyro_On_ETH    false    //true Protocol is implemented on ETH flase- Gyro data is received on ETH
+#define ETH_Proto_Implemented true //if gyro data is expected this can not be true
+#define PNDNT_Proto_Implemented false
+    
+#define ETH_Fb_Time_mSec 1    //with baud 57600 1.9msec is the transmission time 115200 0.9 but framing error occurs
+#define PNDNT_Fb_Time_mSec 10 //10msec fb for pendant    
+#define Keybaord_Used false //define this if Keyabords is to be used else those inputs would be additional INPUTS
+#define Only_4_Return_Lines  true //for std keyboard only 4 return lines are Used other 4 lines are to be used as Inputs
+                                //if this is false then full 5x8 keybaord is used (if kbd configfured)
+
+
+    
+////////////////**** DO NOT MODIFY **** ///////////////////////////////////////
+#if (Gyro_On_ETH==true)
+  #if  (ETH_Proto_Implemented == true)
+    #error "Gyro and Protocl BOTH on ETH NOT Possible"
+#endif
+#endif
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* PORT_DEFINITIONS_H */
+

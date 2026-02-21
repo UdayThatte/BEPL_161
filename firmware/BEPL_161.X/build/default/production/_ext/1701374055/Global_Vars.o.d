@@ -21,8 +21,7 @@ build/default/production/_ext/1701374055/Global_Vars.o: \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
- ../../../BEPL_T/firmware/src/BSP/I2C_comm.h \
- ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
+ ../../../BEPL_T/firmware/src/BSP/I2C_comm.h ../src/Custom/CAN_Comm.h \
  ../../../BEPL_T/firmware/src/API/Protocol.h
 
 ../src/config/default/definitions.h:
@@ -69,6 +68,6 @@ build/default/production/_ext/1701374055/Global_Vars.o: \
 
 ../../../BEPL_T/firmware/src/BSP/I2C_comm.h:
 
-../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
+../src/Custom/CAN_Comm.h:
 
 ../../../BEPL_T/firmware/src/API/Protocol.h:

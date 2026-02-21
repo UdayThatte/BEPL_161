@@ -22,7 +22,8 @@ build/default/production/_ext/1701375116/KBD_5X8_rd.o: \
  ../src/config/default/peripheral/uart/plib_uart2.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
- ../src/System_Configuration.h
+ ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
+ ../src/Project_Configuration.h
 
 ../../../BEPL_T/firmware/src/BSP/KBD_5X8_rd.h:
 
@@ -68,4 +69,6 @@ build/default/production/_ext/1701375116/KBD_5X8_rd.o: \
 
 ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h:
 
-../src/System_Configuration.h:
+../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
+
+../src/Project_Configuration.h:
