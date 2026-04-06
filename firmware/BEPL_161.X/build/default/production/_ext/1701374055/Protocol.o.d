@@ -23,7 +23,7 @@ build/default/production/_ext/1701374055/Protocol.o: \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
  ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
- ../src/Project_Configuration.h ../src/App_Protocol.h
+ ../src/Project_configuration.h ../src/App_Protocol.h
 
 ../../../BEPL_T/firmware/src/API/Protocol.h:
 
@@ -71,6 +71,6 @@ build/default/production/_ext/1701374055/Protocol.o: \
 
 ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
 
-../src/Project_Configuration.h:
+../src/Project_configuration.h:
 
 ../src/App_Protocol.h:

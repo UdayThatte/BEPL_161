@@ -37,25 +37,25 @@ uint16_t  EL_Enco_GR =  1;
 
 //for SSI MT
 EncoderParas_t AZ_Encoder_Data = {
-    .IsitGrayCode = false,
+    .IsitGrayCode = true,
     .direction = 1,
     .revBits = 12,
-    .angBits = 16,
-    .gearRatio = 5
+    .angBits = 0,
+    .gearRatio = 1
 };
 
 
 Ampl_Paras AZ_Paras = 
 {
     .motor_rotation_direction = 1,
-    .GR_motor_to_load = 125.0,
+    .GR_motor_to_load = 1,//125.0,
     .Max_Positive = 359.99,
     .Max_Negative = -359.99,
     .AmplCountForOneRot = 65536,
     .IsVelocityinRPM = true,
-    .Max_Velocity = 20.0,
-    .default_Velocity = 10.0,
-    .default_acc = 5.0
+    .Max_Velocity = 1500.0,
+    .default_Velocity = 1000.0,
+    .default_acc = 500.0
 }; 
 
 Ampl_Paras EL_Paras = 

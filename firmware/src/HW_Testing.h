@@ -54,8 +54,8 @@ void Test_Brakes();
 void Test_Keys();
 void Test_LCD(uint8_t DispNo);
 void Test_ADC();
-//toggles Spare GPIO available on the UNI02 board
-void Test_Spares_Uni02();
+//toggles Spare GPIO available on the UNI05 board
+void Test_Spares_Uni05();
 
 #ifdef	__cplusplus
 }

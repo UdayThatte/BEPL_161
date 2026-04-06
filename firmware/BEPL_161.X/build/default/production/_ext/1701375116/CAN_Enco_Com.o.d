@@ -23,7 +23,8 @@ build/default/production/_ext/1701375116/CAN_Enco_Com.o: \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
  ../../../BEPL_T/firmware/src/BSP/Events.h \
- ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h
+ ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
+ ../../../BEPL_T/firmware/src/Utils/Utils.h
 
 ../../../BEPL_T/firmware/src/BSP/CAN_Enco_Com.h:
 
@@ -72,3 +73,5 @@ build/default/production/_ext/1701375116/CAN_Enco_Com.o: \
 ../../../BEPL_T/firmware/src/BSP/Events.h:
 
 ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
+
+../../../BEPL_T/firmware/src/Utils/Utils.h:

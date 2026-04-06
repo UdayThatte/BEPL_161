@@ -49,7 +49,10 @@
 
 //
 //
-extern volatile uint8_t GyroByte;
+extern char ATResponse[];
+extern char ETH_AT_Buffer[];
+extern uint8_t ETH_DAT_Buffer[];
+
 extern volatile int IN_PNDNT_BUF;
 extern uint8_t PNDNT_DAT_Buffer[];
 
@@ -82,7 +85,7 @@ extern volatile int IN_DAT_BUF;
 
 extern uint8_t FC_byte_in_feedback;
 
-extern bool System_Booted ;
+extern volatile bool System_Booted ;
 volatile int MyTimer=0;
 
 
@@ -271,39 +274,39 @@ void Check_CAN_Devices()
  char Reason[64];
  
     printf("\rWait Finding AZ Amplifier..");
-    LCDWriteString(1,1,1,"Finding AZ Amplifier");
+    LCDWriteString(0,1,1,"Finding AZ Amplifier");
     
     if(!GetAmplStatus(AZ_Amplifier,&StatWrd)) 
     {
         printf("\rAZ Ampl GetStatus Failed..CANState- %d",CAN_state);
-        LCDWriteString(1,1,1,"AZ Amplifier Error  ");
+        LCDWriteString(0,1,1,"AZ Amplifier Error  ");
     }
     else
     {
         printf("\rAZ Amplifier Found");
-        LCDWriteString(1,1,1,"AZ Amplifier Found..");
+        LCDWriteString(0,1,1,"AZ Amplifier Found..");
     }
         
 /////
    printf("\rWait Finding EL Amplifier..");
-   LCDWriteString(1,2,1,"Finding EL Amplifier");
+   LCDWriteString(0,2,1,"Finding EL Amplifier");
 
     if(!GetAmplStatus(EL_Amplifier,&StatWrd)) 
     {
         printf("\rEL Ampl GetStatus Failed..CANState- %d",CAN_state);
-        LCDWriteString(1,2,1,"EL Amplifier Error  ");
+        LCDWriteString(0,2,1,"EL Amplifier Error  ");
     }
     else
     {
         printf("\rEL Amplifier Found");
-        LCDWriteString(1,2,1,"EL Amplifier Found..");
+        LCDWriteString(0,2,1,"EL Amplifier Found..");
     }
    
     Get_and_Display_Ampl_Error(AZ_Amplifier,Reason,"AZ Amplifier");
-    LCDWriteString(1,3,1,Reason);
+    LCDWriteString(0,3,1,Reason);
     delay_mS(2000);
 //        printf("\rWait Finding AZ Encoder..");
-//        LCDWriteString(1,3,1,"Finding AZ Encoder  ");
+//        LCDWriteString(0,3,1,"Finding AZ Encoder  ");
 //        count = 0;
 //        Send_Preop_NMT(AZ_Encode_Node,&Enco); //response or not do not check
 //       //At Fresh power on it gives response After that it has to be put in start mode
@@ -316,14 +319,14 @@ void Check_CAN_Devices()
 //        }while( ((Enco & 0xff)!=0x0) && (count<6));//Bootup Message 0x00
 //        
 //        if(count<6)
-//            LCDWriteString(1,3,1,"AZ Encoder Found    ");
+//            LCDWriteString(0,3,1,"AZ Encoder Found    ");
 //        else
-//            LCDWriteString(1,3,1,"AZ Encoder NOT Found");
+//            LCDWriteString(0,3,1,"AZ Encoder NOT Found");
 // 
 //
 //// 
 //        printf("\rWait Finding EL Encoder..");
-//        LCDWriteString(1,4,1,"Finding EL Encoder  ");
+//        LCDWriteString(0,4,1,"Finding EL Encoder  ");
 //        count = 0;
 //       Send_Preop_NMT(EL_Encode_Node,&Enco); //response or not do not check
 //       //At Fresh power on it gives response After that it has to be put in start mode
@@ -336,9 +339,9 @@ void Check_CAN_Devices()
 //        }while( ((Enco & 0xff)!=0x0) && (count<6));//Bootup Message 0x00
 //        
 //        if(count<6)
-//            LCDWriteString(1,4,1,"EL Encoder Found    ");
+//            LCDWriteString(0,4,1,"EL Encoder Found    ");
 //        else
-//            LCDWriteString(1,4,1,"EL Encoder NOT Found");
+//            LCDWriteString(0,4,1,"EL Encoder NOT Found");
 // 
  
  
@@ -350,7 +353,7 @@ void disp_all_inputs()
  char cc;
  char dispstr[32];
  
-    LCDWriteString(1,3,1,"INP:                ");
+    LCDWriteString(0,3,1,"INP:                ");
         
         for (i = 15; i >= 0; i--) 
         {
@@ -364,7 +367,7 @@ void disp_all_inputs()
     if(ADC_result_ready)
     {
         sprintf(dispstr,"VSPR1:%3.1f  VSPR2:%3.1f",((double)ADC_Spr1/0x3ff)*2.5,((double)ADC_Spr2/0x3ff)*2.5 );
-        LCDWriteString(1,4,1,dispstr);
+        LCDWriteString(0,4,1,dispstr);
         ADC_result_ready = false;
         
     }
@@ -420,9 +423,9 @@ int count=0;
         
     while(!done)
     {
-            disp_all_inputs(); //on second display
+            //disp_all_inputs(); //on second display
             
-            Get_Enco_Count_CAN(EL_Encode_Node,&Enco);
+            Get_Enco_Count_CAN(AZ_Encode_Node,&Enco);
             if(CAN_state == STATE_CAN_IDLE)
              {
                  Get_Paras_12Bit_Encoders(Enco,&Angle,EL_Enco_GR);
@@ -503,23 +506,23 @@ int count=0;
                         
                         Reset_SSI_Enco(0);
 //                        
-                        Reset_CAN_Enco(EL_Encode_Node);
+                        Reset_CAN_Enco(AZ_Encode_Node);
                         
                         Set_Motor_Home_Position(AZ_Amplifier);
                         break;
                    case ELKEY:
-                        Move_Motor(10.0,true,true); //relative
+                        Move_Motor(360.0,true,true); //relative
                         break;
                    case AZKEY:
                         //Move_Motor(-90.0,false,true); //absolute
-                        LCDWriteString(1,2,1,"                    ");
-                        LCDWriteString(1,2,1,"Abs.Postion?");
-                        if(Enter_float_Data(1,6,2,14,&Angle,30))
+                        LCDWriteString(0,2,1,"                    ");
+                        LCDWriteString(0,2,1,"Abs.Postion?");
+                        if(Enter_float_Data(0,6,2,14,&Angle,30))
                         {
                             if((Angle>359.9)||(Angle<-359.9))
                             {
                             ClearDisp(1);
-                            LCDWriteString(1,2,1,"Invalid Angle!");
+                            LCDWriteString(0,2,1,"Invalid Angle!");
                             ShortBeep();
                             }
                             else
@@ -528,7 +531,7 @@ int count=0;
                         else
                         {
                             ClearDisp(1);
-                            LCDWriteString(1,2,1,"NO Angle!");
+                            LCDWriteString(0,2,1,"NO Angle!");
                             ShortBeep();
                         }
         
@@ -627,12 +630,10 @@ void Main_Loop()
  float ttt=0;  
  char cc;
  int i;
-    
-  
-    
+
    //stage6
    done = false;
-   
+//   
     LCDWriteString(0,4,1,"Press ENTER to exit. ");
     while(!done)
     {
@@ -804,21 +805,43 @@ int main ( void )
   char dispstr[32]  ;
   uint32_t Enco;
   double Angle;
-    
+  uint8_t Gdata[24];
+  int count;
+  
     PON_Inits(); //This is mandatory Function to be called
     ///////
     printf("\rPON wait..");
     
+//     delay_mS(5000);
+//     printf("\rWait Over..");
+//    System_Booted=true;
+    
+//    while(1)
+//    {
+//        Test_SSI_Enco(0);
+//        
+//        Test_Inps();
+//        Test_CAN_Enco(AZ_Encode_Node);
+//        
+//        //Get_Enco_Count_CAN(0x03,&Enco);
+//        //printf("%d",Enco);
+//        Test_Ops();
+//        Test_Brakes();
+//            Test_RTC();
+//            Test_LEDs();    
+//        
+//    }
+    
     
     Init_LCD(0);  //Firts LCD intiated
-    Init_LCD(1);  //Firts LCD intiated
+    //Init_LCD(1);  //Firts LCD intiated
     ClearDisp(0);
-    ClearDisp(1);
-    
-    
+    //ClearDisp(1);
+        
 //ETH module and Drive amplifier takes time to reset        
 //other wise it does not respond to "+++" but gives response to socket bytes    
-    for(int m=6;m>0;m--)
+    int m;
+    for(m=6;m>0;m--)
     {
         sprintf(dispstr,"POWER ON START:   %02d",m-1);
         LCDWriteString(0,1,1,dispstr);
@@ -829,18 +852,130 @@ int main ( void )
     delay_mS(500);
     ShortBeep();
     
+    //test gyro
+//    while(1)
+//    {
+//     if(Get_Gyro_Data(Gdata))
+//     {
+//      ShortBeep(); 
+//      for(m=0;m<14;m++)
+//          printf("%02X",Gdata[m]);
+//      
+//      printf("\r\n");     
+//     }
+//     delay_mS(10);
+//    }
     
-    LCDWriteString(0,2,1,"Testing Spare GPIOs ");
-    Test_Spares_Uni02();
+   // LCDWriteString(0,2,1,"Testing Spare GPIOs ");
+   // Test_Spares_Uni05();
+    
+//            Put_ETH_In_AT_Mode();
+//
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURIP?\r","OK>",2000)) //Current IP
+//            {
+//                strcat(ETH_AT_Buffer,"\r");
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//             printf("\rNo Response to CURIP");
+//
+//            delay_mS(100);//Allow to complete response string
+//
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURMK?\r","OK>",2000)) //Current Mask
+//            {
+//            strcat(ETH_AT_Buffer,"\r");
+//            printf(ETH_AT_Buffer);
+//            }
+//            else
+//              printf("\rNo Response to CURMK");
+//
+//            delay_mS(100);//Allow to complete response string    
+//
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURGW?\r","OK>",2000)) //Current GW
+//            {
+//             strcat(ETH_AT_Buffer,"\r");
+//             printf(ETH_AT_Buffer);
+//            }
+//            else
+//              printf("\rNo Response to CURGW");
+//
+//            delay_mS(100);//Allow to complete response string
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURDN?\r","OK>",2000)) //Curent DNS
+//            {
+//                strcat(ETH_AT_Buffer,"\r");
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//             printf("\rNo Response to CURDN");
+//
+//            delay_mS(100);//Allow to complete response string    
+//
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURST?\r","OK>",2000)) //Current State
+//            {
+//                strcat(ETH_AT_Buffer,"\r");    
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//              printf("\rNo Response to CURST");
+//
+//            delay_mS(100);//Allow to complete response string
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURS0?\r","OK>",2000)) //State ch0
+//            {
+//                strcat(ETH_AT_Buffer,"\r");    
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//             printf("\rNo Response to CURS0");
+//
+//            delay_mS(100);//Allow to complete response string
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURS1?\r","OK>",2000)) //State ch1
+//            {
+//                strcat(ETH_AT_Buffer,"\r");    
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//              printf("\rNo Response to CURS1");
+//
+//            delay_mS(100);//Allow to complete response string
+//
+//            if(Send_AT_Cmd_To_ETH("AT#CURMA?\r","OK>",2000)) //MAC id of module
+//            {
+//                strcat(ETH_AT_Buffer,"\r");    
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//             printf("\rNo Response to CURMA");
+//
+//            delay_mS(100);//Allow to complete response string    
+//
+//            if(Send_AT_Cmd_To_ETH("AT#SER0LN?\r","OK>",2000)) //Listening or Not
+//            {
+//                strcat(ETH_AT_Buffer,"\r");    
+//                printf(ETH_AT_Buffer);
+//            }
+//            else
+//             printf("\rNo Response to SER0LN");   
+//
+//            delay_mS(100);//Allow to complete response string        
+//
+//            Exit_ETH_From_AT_Mode();
     
     ClearDisp(0);
-    LCDWriteString(0,2,1,"Using Second Display");
-    ShortBeep();
+  //  LCDWriteString(0,2,1,"Using Second Display");
+  //  ShortBeep();
     
-    Check_CAN_Devices();
     
-    //LCDWriteString(1,3,1,"Testing Keys..");
-    //LCDWriteString(1,4,1,"Press Q on PC");
+    //Check_CAN_Devices();
+    
+    //LCDWriteString(0,3,1,"Testing Keys..");
+    //LCDWriteString(0,4,1,"Press Q on PC");
     //Test_Keys();
     
     System_Booted = true;
@@ -848,6 +983,7 @@ int main ( void )
 
     //Test_Keys();
     
+     
     Main_Loop();
  
     /* Execution should not come here during normal operation */

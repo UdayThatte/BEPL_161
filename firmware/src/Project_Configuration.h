@@ -18,9 +18,9 @@ extern "C" {
 #include "definitions.h"                // SYS function prototypes
     
 //UART1 is used for Debug across all models
-//For this Hardware UNI02 U6 is not used 
+//For this Hardware UNI05 U6 is not used 
 
-#define  UNI02 // defined Base baord here UNI02 UNI03 FOR NOW
+#define  UNI05 // defined Base baord here UNI05 UNI06 FOR NOW
     //this will defined ports in the Board_Configuration.h
     
 //define the Amplifier/Encoder nodes here (Offset)
@@ -36,19 +36,19 @@ extern "C" {
 #define AZ_Position_Negative_Error 0.1    
 
 ////** LINES BELOW    WILL CONTROL BEHAVIOUR OF APPLICATION SET ALL PROPERLY
-#define Gyro_On_ETH    true    //true Protocol is implemented on ETH flase- Gyro data is received on ETH
+#define Gyro_On_ETH    false    //true Protocol is implemented on ETH flase- Gyro data is received on ETH
 #define ETH_Proto_Implemented false //if gyro data is expected this can not be true
-#define PNDNT_Proto_Implemented true
+#define PNDNT_Proto_Implemented false
     
 #define ETH_Fb_Time_mSec 1    //with baud 57600 1.9msec is the transmission time 115200 0.9 but framing error occurs
 #define PNDNT_Fb_Time_mSec 10 //10msec fb for pendant    
-#define Keybaord_Used false //define this if Keyabords is to be used else those inputs would be additional INPUTS
+#define Keybaord_Used true //define this if Keyabords is to be used else those inputs would be additional INPUTS
 #define Only_4_Return_Lines  true //for std keyboard only 4 return lines are Used other 4 lines are to be used as Inputs
                                 //if this is false then full 5x8 keybaord is used (if kbd configfured)
 
 #if (PNDNT_Proto_Implemented == true)
 
-#define  PNDNT_PORT RS422_0 //For UNI02  RS422_0/RS422_1 for UNI03 Only RS422_0
+#define  PNDNT_PORT RS422_0 //For UNI02  RS422_0/RS422_1 for UNI06 Only RS422_0
 
 #endif
 ////////////////**** DO NOT MODIFY **** ///////////////////////////////////////

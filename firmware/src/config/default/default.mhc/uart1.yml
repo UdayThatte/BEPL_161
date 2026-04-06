@@ -62,20 +62,16 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: uart1, value: 'false'}
+        attributes: {id: uart1, value: 'true'}
   - type: KeyValueSet
     attributes: {id: UART_OPERATING_MODE}
     children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: readOnly}
-        children:
-        - {type: Value, value: 'true'}
     - type: Values
       children:
       - type: Dynamic
         attributes: {id: uart1, value: '0'}
+      - type: User
+        attributes: {value: '1'}
   - type: KeyValueSet
     attributes: {id: UART_PDBIT_SELECT}
     children:
@@ -111,20 +107,5 @@ children:
       children:
       - type: Dynamic
         attributes: {id: uart1, value: DRV_USART_DATA_8_BIT}
-- type: Attachments
-  children:
-  - type: DirectCapability
-    attributes: {id: UART1_UART}
-    children:
-    - type: Attributes
-      children:
-      - type: String
-        attributes: {id: targetComponentID}
-        children:
-        - {type: Value, value: stdio}
-      - type: String
-        attributes: {id: targetAttachmentID}
-        children:
-        - {type: Value, value: UART}
 - type: ElementPosition
-  attributes: {x: '130', y: '140', id: uart1}
+  attributes: {x: '130', y: '139', id: uart1}

@@ -32,7 +32,7 @@ extern Protocol_Info PNDNT_Proto_Ptrs;
 
 extern uint8_t FC_byte_in_feedback;
 //extern uint8_t Status_Byte1_in_feedback;
-extern bool System_Booted ;
+extern volatile bool System_Booted ;
 
 extern volatile I2C_TRANSFER_STATUS transferStatus;
 extern volatile bool InputReadEnable;
@@ -65,7 +65,7 @@ void Test_Inps()
        }
       delay_mS(100);
      
-        c = Read_stdin_if_ready();
+       c = Read_stdin_if_ready();
        //getchar();
 
        if((c=='Q')||(c=='q'))
@@ -106,7 +106,7 @@ void Test_SSI_Enco(uint8_t ChNo)
         }
         else
         {
-            printf("\r\r SSI Encoder ERROR %d\r\r",CAN_state);
+            printf("\r\r SSI Encoder ERROR\r\r");
             LongBeep();
             return;
         }
@@ -778,17 +778,17 @@ void Test_ADC()
 
 }
 
-void Test_Spares_Uni02()
+void Test_Spares_Uni05()
 {
-//TODO this will change as per Base board UNI02/03
+//TODO this will change as per Base board UNI05/06
     int n=5;
     printf("\r\rTesting SPR GPIOs..");
     
     SPI_CS1_Clear();
     SPI_CS2_Clear();
     INTR1_Set();
-    SPR5_Set(); //for UNI02 as Only one SSI is conneted for Demo Tis can be used
-    SPR6_Set(); //for UNI02 as Only one SSI is conneted for Demo Tis can be used
+    SPR5_Set(); //for UNI05 as Only one SSI is conneted for Demo Tis can be used
+    SPR6_Set(); //for UNI05 as Only one SSI is conneted for Demo Tis can be used
 
         while(n)
         {
@@ -804,7 +804,7 @@ void Test_Spares_Uni02()
         SPI_CS1_Set();
         SPI_CS2_Set();
         INTR1_Clear();
-        SPR5_Clear(); //for UNI02 as Only one SSI is conneted for Demo Tis can be used
-        SPR6_Clear(); //for UNI02 as Only one SSI is conneted for Demo Tis can be used
+        SPR5_Clear(); //for UNI05 as Only one SSI is conneted for Demo Tis can be used
+        SPR6_Clear(); //for UNI05 as Only one SSI is conneted for Demo Tis can be used
 
 }

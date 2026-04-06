@@ -23,11 +23,12 @@ build/default/production/_ext/1701375116/Events.o: \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
  ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
- ../src/Project_Configuration.h \
+ ../src/Project_configuration.h \
  ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h \
  ../../../BEPL_T/firmware/src/BSP/I2C_Comm.h \
  ../../../BEPL_T/firmware/src/API/Protocol.h \
- ../../../BEPL_T/firmware/src/BSP/KBD_5X8_rd.h
+ ../../../BEPL_T/firmware/src/BSP/KBD_5X8_rd.h \
+ ../src/Project_Configuration.h
 
 ../../../BEPL_T/firmware/src/BSP/Events.h:
 
@@ -75,7 +76,7 @@ build/default/production/_ext/1701375116/Events.o: \
 
 ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
 
-../src/Project_Configuration.h:
+../src/Project_configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/CAN_Comm.h:
 
@@ -84,3 +85,5 @@ build/default/production/_ext/1701375116/Events.o: \
 ../../../BEPL_T/firmware/src/API/Protocol.h:
 
 ../../../BEPL_T/firmware/src/BSP/KBD_5X8_rd.h:
+
+../src/Project_Configuration.h:

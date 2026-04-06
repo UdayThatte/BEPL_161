@@ -61,9 +61,9 @@
 
 
 void CORE_TIMER_InterruptHandler( void );
+void UART_1_InterruptHandler( void );
 void ADC_InterruptHandler( void );
 void UART_3_InterruptHandler( void );
-void UART_2_InterruptHandler( void );
 void I2C_2_InterruptHandler( void );
 void CAN1_InterruptHandler( void );
 void UART_4_InterruptHandler( void );
@@ -78,6 +78,11 @@ void __ISR(_CORE_TIMER_VECTOR, ipl2SOFT) CORE_TIMER_Handler (void)
     CORE_TIMER_InterruptHandler();
 }
 
+void __ISR(_UART_1_VECTOR, ipl2SOFT) UART_1_Handler (void)
+{
+    UART_1_InterruptHandler();
+}
+
 void __ISR(_ADC_VECTOR, ipl1SOFT) ADC_Handler (void)
 {
     ADC_InterruptHandler();
@@ -86,11 +91,6 @@ void __ISR(_ADC_VECTOR, ipl1SOFT) ADC_Handler (void)
 void __ISR(_UART_3_VECTOR, ipl2SOFT) UART_3_Handler (void)
 {
     UART_3_InterruptHandler();
-}
-
-void __ISR(_UART_2_VECTOR, ipl1SOFT) UART_2_Handler (void)
-{
-    UART_2_InterruptHandler();
 }
 
 void __ISR(_I2C_2_VECTOR, ipl1SOFT) I2C_2_Handler (void)

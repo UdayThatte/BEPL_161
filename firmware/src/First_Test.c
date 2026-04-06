@@ -19,7 +19,7 @@ extern Protocol_Info PNDNT_Proto_Ptrs;
 //
 extern uint8_t FC_byte_in_feedback;
 
-extern bool System_Booted ;
+extern volatile bool System_Booted ;
 
 
 extern volatile bool InputReadEnable;
@@ -91,7 +91,7 @@ void Main_Loop_Our()
 
  
     Test_ADC();
-    Test_Spares_Uni02();
+    Test_Spares_Uni05();
     
  
     //printf("\r\rResetting ETH Module..");

@@ -23,7 +23,7 @@ build/default/production/_ext/1701374055/ETH_NetBurner.o: \
  ../src/config/default/peripheral/spi/spi_master/plib_spi1_master.h \
  ../src/config/default/peripheral/spi/spi_master/plib_spi_master_common.h \
  ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h \
- ../src/Project_Configuration.h \
+ ../src/Project_configuration.h \
  ../../../BEPL_T/firmware/src/BSP/Sys_Inits.h \
  ../../../BEPL_T/firmware/src/BSP/Beeps.h \
  ../src/config/default/toolchain_specifics.h \
@@ -75,7 +75,7 @@ build/default/production/_ext/1701374055/ETH_NetBurner.o: \
 
 ../../../BEPL_T/firmware/src/BSP/Board_Configuration.h:
 
-../src/Project_Configuration.h:
+../src/Project_configuration.h:
 
 ../../../BEPL_T/firmware/src/BSP/Sys_Inits.h:
 
